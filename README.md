@@ -2,7 +2,9 @@
 MignalBotは5分/10分/30分/60分のいずれかの間隔で時報を投稿するMisskeyBotです。時刻のソースはサーバーの時間に準じています。
 
 ## 使い方
-pipでmisskey.pyをインストールする。
+pipでmisskey.pyをインストールする。  
+mignal.py内の`you-domain.dev`に所属するインスタンスのURLを入力する  
+mignal.py内の`Token`に`ノートを作成・削除する`の権限を与えたトークンを入力する。  
 
 ## 設定
 domain = 所属するサーバーのドメイン  
