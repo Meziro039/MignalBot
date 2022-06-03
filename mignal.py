@@ -41,9 +41,7 @@ while True:
     while True:
         dt_now = datetime.datetime.now()
         if dt_now.minute in interval_set:
-            print("Check")
             break
-        print("ping" + str(dt_now.minute) + str(dt_now.second))
         time.sleep(1)
 
     # 時間格納
@@ -77,7 +75,6 @@ while True:
     postdata_set = postdata_set.replace('{ja12}', str(ja12))
 
     # 投稿
-    print(dt_now)
     note = msk.notes_create(postdata_set, visibility="home")
     print(note["createdNote"]["id"])
     time.sleep(60)
