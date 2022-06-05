@@ -1,29 +1,30 @@
 import datetime
 from misskey import Misskey
+from NowTime import nowtime
 import time
 
 # [Config]
 domain = "you-domain.dev"
 token = ""
 display = 12 # 12 or 24
-timezone = "jst" # 現時点では利用不可
-interval = 30 # 5 or 10 or 30 or 60
-postdata = "{ja12}{hour}時{minute}分です。"
+timezone = "jst"
+interval = 5 # 5 or 10 or 30 or 60
+postdata = "{year}年{month}月{day}日{ja12}{hour}時{minute}分({timezone})です。"
 # [Config]
 
 # Variable
 msk = Misskey(domain, i=token) 
-interval_set = [0]
-postdata_set = "0"
-dt_now = 0
-year = 0
-month = 0
-day = 0
-hour = 0
-minute = 0
-timezone_set = "0"
-en12 = "0"
-ja12 = "0"
+interval_set = None
+postdata_set = None
+nt = None
+year = None
+month = None
+day = None
+hour = None
+minute = None
+timezone_set = None
+en12 = None
+ja12 = None
 
 # コンフィグの設定
 if 5 == interval:
@@ -39,18 +40,19 @@ if 60 == interval:
 while True:
     # 時間一致判定
     while True:
-        dt_now = datetime.datetime.now()
-        if dt_now.minute in interval_set:
+        nt = nowtime.get
+        if nt(timezone, "minute") in interval_set:
             break
-        time.sleep(1)
+        else:
+            print("ping" + str(nt(timezone, "second")))
+            time.sleep(1)
 
     # 時間格納
-    year = dt_now.year
-    month = dt_now.month
-    day = dt_now.day
-    hour = dt_now.hour
-    minute = dt_now.minute
-    timezone_set = timezone
+    year = nt(timezone, "year")
+    month = nt(timezone, "month")
+    day = nt(timezone, "day")
+    hour = nt(timezone, "hour")
+    minute = nt(timezone, "minute")
 
     # 12h表示判定
     if display == 12:
@@ -70,13 +72,13 @@ while True:
     postdata_set = postdata_set.replace('{day}', str(day))
     postdata_set = postdata_set.replace('{hour}', str(hour))
     postdata_set = postdata_set.replace('{minute}', str(minute))
-    postdata_set = postdata_set.replace('{timezone}', str(timezone_set))
+    postdata_set = postdata_set.replace('{timezone}', str(timezone.upper()))
     postdata_set = postdata_set.replace('{en12}', str(en12))
     postdata_set = postdata_set.replace('{ja12}', str(ja12))
 
     # 投稿
     note = msk.notes_create(postdata_set, visibility="home")
-    print(note["createdNote"]["id"])
-    time.sleep(60)
+    print("NotePost: " + note["createdNote"]["id"])
+    time.sleep(120)
 
-    # C/https://github.com/Meziro039
+# C/https://github.com/Meziro039
