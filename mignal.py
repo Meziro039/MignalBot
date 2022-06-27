@@ -1,4 +1,3 @@
-import datetime
 from misskey import Misskey
 from NowTime import nowtime
 import time
@@ -44,7 +43,6 @@ while True:
         if nt(timezone, "minute") in interval_set:
             break
         else:
-            print("ping" + str(nt(timezone, "second")))
             time.sleep(1)
 
     # 時間格納
