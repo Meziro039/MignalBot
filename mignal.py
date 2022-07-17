@@ -3,7 +3,7 @@ from NowTime import nowtime
 import time
 
 # [Config]
-domain = "you-domain.dev"
+domain = "example.com"
 token = ""
 display = 12 # 12 or 24
 timezone = "jst"
